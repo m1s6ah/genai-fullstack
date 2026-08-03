@@ -3,6 +3,8 @@ const express = require("express")
 const app = express()// server initiate krna , server ka instance create krna
 //middlewares or routes create krna and use krna yeh app.js ka kaam hai
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 //require all the routes here
 const authRouter = require("./routes/auth.routes")
