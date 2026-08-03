@@ -18,7 +18,7 @@ async function registerUserController(req,res){
         })
     }
 
-    const isUserAlreadyExists = await userModel.findone({
+    const isUserAlreadyExists = await userModel.findOne({
         $or: [{username},{email}]
     })
 
@@ -64,8 +64,15 @@ async function registerUserController(req,res){
  * 
  */
 async function loginUserController(req,res){
-    
-    const user = await userModel.findOne({email})
+    const { email, password } = req.body
+
+    if (!email || !password) {
+        return res.status(400).json({
+            message: "Please provide email and password"
+        })
+    }
+
+    const user = await userModel.findOne({ email })
 
     if(!user){
         return res.status(400).json({
@@ -95,7 +102,22 @@ const token = jwt.sign(
 
 }
 
+/**
+ * @name logoutUserController
+ * @description logout a user, expects token in the request header
+ * @access Public 
+ * 
+ */
+
+async function logoutUserController(req,res){
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1]
+    res.clearCookie("token")
+    res.status(200).json({
+        message:"User logged out successfully"
+    })
+}
 module.exports= {
     registerUserController,
-    loginUserController
+    loginUserController,
+    logoutUserController
 }
