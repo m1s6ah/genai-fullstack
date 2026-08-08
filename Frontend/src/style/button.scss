@@ -1,0 +1,22 @@
+.button //class
+{
+    border: none;
+    outline:none;
+    padding-inline:1.5rem; //left and right padding
+    padding-block:0.75rem; //top and bottom padding
+    border-radius:1rem;//rounded corners
+    cursor:pointer;
+
+    transition: all 0.3s ease-in-out;
+
+    &.primary-button{
+               background-color: #f20f53;
+               color:white;
+
+    }
+
+    &:active{
+        transform: scale(0.98);
+    }
+   
+} 
